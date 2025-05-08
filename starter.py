@@ -1,18 +1,14 @@
+from hunter import Hunter, Bows, HUNTER_BOOTS,HUNTER_CLOAK, HUNTER_HOOD, LONG_BOW, CROSS_BOW, RECURIVED_BOW, hunter_hood_dmg_reduction, hunter_boots_dmg_reduction, hunter_cloak_dmg_reduction, long_bow_dmg, cross_bow, recurived_bow_dmg
+
+from wizard import Wizard, Staffs, WIZARD_HAT, WIZARD_BOOTS, WIZARD_ROBE, MAGIC_STAFF, WATER_STAFF, LIGHTING_STAFF, FIRE_STAFF, wizard_boots_dmg_reduction, wizard_hat_dmg_reduction, wizard_robe_dmg_reduction, magic_staff_dmg, lighting_staff_dmg, water_staff_dmg, fire_staff_dmg
+
+from knight import Knight, Swords, KNIGHT_HELMET, KNIGHT_CHESTPLATE, KNIGHT_LEGPLATES, KATANA, LONG_SWORD, RAPIER, knight_legplates_dmg_reduction, knight_chestplate_dmg_reduction, knight_helmet_armour_dmg_reduction, long_sword_dmg, rapier_dmg, katana_dmg
+
+
 #todo
 #make the classes with there health and starting loadouts
 #make a level increase method that increases there hp attack  and defense
 #make a weapons class
-
-
-import random
-
-def starting_classes():
-    pass
-    # Wizard
-    # Knight
-    # Calvary
-    # Hunter
-
 
 
 # Weapons
@@ -23,88 +19,28 @@ def starting_classes():
 # add a stats method that shows the stats of the weapon such as damage and special abilites
 #
 
-LONG_BOW = 'Long bow'
-RECURIVED_BOW = 'Recurived bow'
-CROSS_BOW = 'Cross bow'
-
-MAGIC_STAFF = 'Magic staff'
-FIRE_STAFF = 'Fire staff'
-WATER_STAFF = 'Water staff'
-LIGHTING_STAFF = 'Lighting staff'
-
-LONG_SWORD = 'Long sword'
-RAPIER = 'Rapier'
-KATANA = 'Katana'
-
-# Bow damage
-def long_bow_dmg(player_level):
-    return 14 + player_level
-
-def recurived_bow_dmg(player_level):
-    return 15 + player_level
-
-def cross_bow(player_level):
-    return 16 + player_level
-
-# Staff damage
-def magic_staff_dmg(player_level):
-    return 15 + player_level
-
-def fire_staff_dmg(player_level):
-    return 16 + player_level
-
-def water_staff_dmg(player_level):
-    return 16 + player_level
-
-def lighting_staff_dmg(player_level):
-    return 16 + player_level
-
-# Sword damage
-def long_sword_dmg(player_level):
-    return 14 + player_level
-
-def rapier_dmg(player_level):
-    return 15 + player_level
-
-def katana_dmg(player_level):
-    return 16 + player_level
-
 def delete_weapon(weapon_class_object):
     del weapon_class_object
-
-class Bows:
-    def __init__(self, type, dmg):
-        self.type = type
-        self.damage = dmg
-         
-
-class Staffs(Bows):
-    def __init__(self, type, ):
-        super().__init__(type, )
-
-class Swords(Bows):
-    def __init__(self, type, ):
-        super().__init__(type, )
 
 # Armour
 
 # TODO
 # make a method that allows for the user to change gear
 # make a del function that allows the user to delete any current gear they have
-# 
+
+
 class HeadArmour:
-    def __init__(self, defence, special_stats, special_abilites):
+    def __init__(self, type, defence):
         self.defence = defence
-        self.special_stats = special_stats
-        self.special_abilites = special_abilites
+        self.type = type
 
 class ChestArmour(HeadArmour):
-    def __init__(self, defence, special_stats, special_abilites):
-        super().__init__(defence, special_stats, special_abilites)
+    def __init__(self, type, defence):
+        super().__init__(defence)
 
 class PantsArmour(HeadArmour):
-    def __init__(self, defence, special_stats, special_abilites):
-        super().__init__(defence, special_stats, special_abilites)
+    def __init__(self, type, defence):
+        super().__init__(defence)
 
 
 # Classes
@@ -115,34 +51,28 @@ class PantsArmour(HeadArmour):
 # make a mehtod that allows the user to switch the char that is attacking
 # make a method that allows the user to switch the enemy that is targeted
 
-def starter_hunter():
-    health = 150
-    weapon = Bows(LONG_BOW, long_bow_dmg())
-    head_armour = HeadArmour()
-
-
-class Wizard:
-    def __init__(self, health, weapon, head_armour, middle_armour, lower_armour, name):
-        self.health = health
-        self.weapon = weapon
-        self.head_armour = head_armour
-        self.middle_armour = middle_armour
-        self.lower_armour = lower_armour
-        self.inventory = []
-        self.name = name
-    def change_weapon(self, new_weapon):
-        self.weapon = new_weapon    
-    def attack(self, weapon, target):
-        target.health -= weapon
-
-
-class Knight(Wizard):
-    def __init__(self, health, weapon, head_armour, middle_armour, lower_armour, name):
-        super().__init__(health, weapon, head_armour, middle_armour, lower_armour, name)
-
-class Hunter(Wizard):
-    def __init__(self, health, weapon, head_armour, middle_armour, lower_armour, name):
-        super().__init__(health, weapon, head_armour, middle_armour, lower_armour, name)
-
-
-hunter = Hunter(250, 'Bow', )
+def starter_class():
+    player_input = input('What class would you like to play')
+    player_name = input('What should we call you')
+    if player_input == 'h':
+        health = 150
+        weapon = Bows(LONG_BOW, long_bow_dmg())
+        head_armour = HeadArmour(HUNTER_HOOD, hunter_hood_dmg_reduction())
+        mid_armour = ChestArmour(HUNTER_CLOAK, hunter_cloak_dmg_reduction())
+        low_armour = PantsArmour(HUNTER_BOOTS,hunter_boots_dmg_reduction())
+        Hunter(health, weapon, head_armour, mid_armour, low_armour, player_name)
+    elif player_input == 'w':
+        health = 200
+        weapon = Staffs(MAGIC_STAFF, magic_staff_dmg())
+        head_armour = HeadArmour(WIZARD_HAT, wizard_hat_dmg_reduction())
+        mid_armour = ChestArmour(WIZARD_ROBE, wizard_robe_dmg_reduction())
+        low_armour = PantsArmour(WIZARD_BOOTS, wizard_boots_dmg_reduction())
+        Wizard(health, weapon, head_armour, mid_armour, low_armour, player_name)
+    elif player_input == 'k':
+        health = 250
+        weapon = Swords(LONG_SWORD, long_sword_dmg())
+        head_armour = HeadArmour(KNIGHT_HELMET, knight_helmet_armour_dmg_reduction())  
+        mid_armour = ChestArmour(KNIGHT_CHESTPLATE, knight_chestplate_dmg_reduction())
+        low_armour = PantsArmour(KNIGHT_LEGPLATES, knight_legplates_dmg_reduction())
+        Knight(health, weapon, head_armour, mid_armour, low_armour, player_name)
+    
