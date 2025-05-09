@@ -1,5 +1,4 @@
 from wizard import Wizard
-from hunter import Bows
 # knight weapons
 LONG_SWORD = 'Long sword'
 RAPIER = 'Rapier'
@@ -29,13 +28,7 @@ def knight_chestplate_dmg_reduction(player_level):
 def knight_legplates_dmg_reduction(player_level):
     return 5 + player_level
 
-class Swords(Bows):
-    def __init__(self, type, dmg):
-        super().__init__(type, dmg)
-
-
 class Knight(Wizard):
     def __init__(self, health, weapon, head_armour, middle_armour, lower_armour, name):
         super().__init__(health, weapon, head_armour, middle_armour, lower_armour, name)
-
-
+        self.level = 1

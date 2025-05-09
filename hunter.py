@@ -29,12 +29,7 @@ def hunter_cloak_dmg_reduction(player_level):
 def hunter_boots_dmg_reduction(player_level):
     return 3 + player_level
 
-class Bows:
-    def __init__(self, type, dmg):
-        self.type = type
-        self.damage = dmg
-
-
 class Hunter(Wizard):
     def __init__(self, health, weapon, head_armour, middle_armour, lower_armour, name):
         super().__init__(health, weapon, head_armour, middle_armour, lower_armour, name)
+        self.level = 1
