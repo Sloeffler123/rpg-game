@@ -50,32 +50,78 @@ class Wizard:
         else:
             return True    
     def change_weapon(self, new_weapon):
-        on = True
-        while on:
-            player_input = input('Would you like to delete your current weapon or put it in your inventory? (D)elete, (I)nventory').lower()
-            if player_input == 'd' or player_input == 'delete':
-                print(f'Deleting {self.weapon}')
+        while True:
+            if self.check_inventory_space():
+                print(f'Storing {self.weapon} in inventory')
+                self.inventory.append(self.weapon)
                 self.weapon = new_weapon
-            elif player_input == 'i' or player_input == 'inventory':
-                if self.check_inventory_space():
-                    print(f'Storing {self.weapon} in inventory')
-                    self.inventory.append(self.weapon)
-                    self.weapon = new_weapon
-                else:
-                    break    
+                break   
             else:
                 print('Please enter a valid option')  
+                break
+    def change_head_armour(self, new_head_gear):
+        self.head_armour = new_head_gear    
+    def change_chest_armour(self, chest_armour):
+        self.middle_armour = chest_armour
+    def change_leg_armour(self, leg_armour):
+        self.lower_armour = leg_armour
     def attack(self, weapon, target):
         target.health -= weapon
     def delete_item_inventory(self, item):
         self.inventory.remove(item)
-    def change_head_armour(self, new_head_gear):
-        if self.check_inventory_space():
-            self.head_armour = new_head_gear    
     def help_manual(self):
         pass
     def look_inventory(self):
-        print(self.inventory)
+        print(f'Inventory: {self.inventory}')
         user_input = input('(D)elete item/(C)hange gear/(E)xit').lower()
         if user_input == 'd' or 'delete':
-            self.delete_item_inventory()
+            while True:
+                delete_item = input('What item would you like to delete from your inventory? ').lower()
+                if delete_item in self.inventory:
+                    print(f'Deleting {delete_item}')
+                    self.delete_item_inventory(delete_item)   
+                    break
+                else:
+                    print('Please enter a valid item') 
+        elif user_input == 'c' or 'change':
+            change_item = input('What item slot would you like to change? (W)eapon, (H)ead gear, (C)hest plate, (L)eg plate, (E)xit').lower()
+            if change_item == 'w' or change_item == 'weapon':
+                while True:
+                    weapon_change = input('What weapon in your inventory would you like to swap with? ')
+                    print(f'Inventory: {self.inventory}')
+                    if weapon_change in self.inventory:
+                        self.change_weapon(weapon_change)
+                        break
+                    else:
+                        print('Please enter a valid option')    
+            elif change_item == 'h' or change_item == 'head':
+                while True:
+                    head_armour = input('What head armour in your inventory would you like to swap with? ')
+                    print(f'Inventory: {self.inventory}')
+                    if head_armour in self.inventory:
+                        self.change_head_armour(head_armour)
+                        break
+                    else:
+                        print('Please enter a valid option')  
+            elif change_item == 'c' or change_item == 'chest':
+                while True:
+                    chest_armour = input('What chest armour in your inventory would you like to swap with? ')   
+                    print(f'Inventory: {self.inventory}')
+                    if chest_armour in self.inventory:
+                        self.change_chest_armour(chest_armour)
+                        break
+                    else:
+                        print('Please enter a valid option')     
+            elif change_item == 'l' or change_item == 'leg':
+                while True:
+                    leg_armour = input('What leg plate armour in your inventory would you like to swap with? ')   
+                    print(f'Inventory: {self.inventory}')
+                    if leg_armour in self.inventory:
+                        self.change_leg_armour(leg_armour)
+                        break
+                    else:
+                        print('Please enter a valid option')    
+            elif change_item == 'e' or change_item == 'exit':
+                pass                                
+        elif user_input == 'e' or user_input == 'exit':
+            pass
