@@ -70,8 +70,10 @@ class Wizard:
     def delete_item_inventory(self, item):
         self.inventory.remove(item)
     def help_manual(self):
-        pass
-    def look_inventory(self):
+        print('Player can only change loadout when they are in there inventory.' \
+        'Player can swap between what enemy they want to target.' \
+        )
+    def look_inventory(self):  
         print(f'Inventory: {self.inventory}')
         user_input = input('(D)elete item/(C)hange gear/(E)xit').lower()
         if user_input == 'd' or 'delete':
@@ -125,3 +127,19 @@ class Wizard:
                 pass                                
         elif user_input == 'e' or user_input == 'exit':
             pass
+    def swap_enemies(self, target, enemies_lst):
+        enemy = enemies_lst[target]
+        enemies_lst.pop(enemy)
+        enemies_lst.insert(0, enemy)
+    def attack_enemy(self, enemies_lst):
+        while True:
+            print(enemies_lst)
+            player_attack = int(input('Which enemy would you like to attack? '))
+            if type(player_attack) == int:
+                print(f'Attacking enemy {player_attack}')
+                self.swap_enemies(player_attack)
+                self.attack(self.weapon, enemies_lst[0])
+                break
+            else:
+                print('Please enter the number of the positon of the enemy you would like to attack')    
+
