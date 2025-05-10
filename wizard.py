@@ -41,16 +41,18 @@ class Wizard:
         self.middle_armour = middle_armour
         self.lower_armour = lower_armour
         self.name = name
-        self.inventory = []
+        self.inventory = ['health pot']
         self.level = 1
         self.gold = 0
         self.xp_bar = 0
+
     def check_inventory_space(self):
         if self.inventory == 15:
             print('To many items in your inventory')
             return False
         else:
             return True    
+        
     def change_weapon(self, new_weapon):
         while True:
             if self.check_inventory_space():
@@ -61,24 +63,31 @@ class Wizard:
             else:
                 print('Please enter a valid option')  
                 break
+
     def change_head_armour(self, new_head_gear):
         self.head_armour = new_head_gear    
+
     def change_chest_armour(self, chest_armour):
         self.middle_armour = chest_armour
+
     def change_leg_armour(self, leg_armour):
         self.lower_armour = leg_armour
+
     def attack(self, weapon, target):
-        target.health -= weapon
+        target.health -= weapon.damage
+
     def delete_item_inventory(self, item):
         self.inventory.remove(item)
+
     def help_manual(self):
         print('Player can only change loadout when they are in there inventory.' \
         'Player can swap between what enemy they want to target.' \
         )
+
     def look_inventory(self):  
         print(f'Inventory: {self.inventory}')
         user_input = input('(D)elete item/(C)hange gear/(E)xit').lower()
-        if user_input == 'd' or 'delete':
+        if user_input == 'd' or user_input == 'delete':
             while True:
                 delete_item = input('What item would you like to delete from your inventory? (E)xit').lower()
                 if delete_item in self.inventory:
@@ -87,7 +96,7 @@ class Wizard:
                     break
                 else:
                     print('Please enter a valid item') 
-        elif user_input == 'c' or 'change':
+        elif user_input == 'c' or user_input == 'change':
             change_item = input('What item slot would you like to change? (W)eapon, (H)ead gear, (C)hest plate, (L)eg plate, (E)xit').lower()
             if change_item == 'w' or change_item == 'weapon':
                 while True:
@@ -131,19 +140,21 @@ class Wizard:
                 pass                        
         elif user_input == 'e' or user_input == 'exit':
             pass
+
     def swap_enemies(self, target, enemies_lst):
         enemy = enemies_lst[target]
-        enemies_lst.pop(enemy)
+        enemy_index = enemies_lst.index(enemy)
+        enemies_lst.pop(enemy_index)
         enemies_lst.insert(0, enemy)
+
     def attack_enemy(self, enemies_lst):
         while True:
             print(enemies_lst)
-            player_attack = int(input('Which enemy would you like to attack? '))
+            player_attack = int(input('Which enemy would you like to attack? ')) - 1
             if type(player_attack) == int:
-                print(f'Attacking enemy {player_attack}')
-                self.swap_enemies(player_attack)
+                print(f'Attacking enemy {player_attack + 1}')
+                self.swap_enemies(player_attack, enemies_lst)
                 self.attack(self.weapon, enemies_lst[0])
                 break
             else:
                 print('Please enter the number of the positon of the enemy you would like to attack')    
-

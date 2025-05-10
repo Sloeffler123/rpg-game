@@ -33,20 +33,17 @@ def knight_class(player_level, player_name):
     return Knight(health, weapon, head_armour, mid_armour, low_armour, player_name)
 
 def starter_class():
-    player_input = input('What class would you like to play? (W)izard, (H)unter, or (K)night: ').lower()
-    player_name = input('What should we call you ').title()
-    player_level = 1
-    if player_input == 'h':
-        return hunter_class(player_level, player_name)
-    elif player_input == 'w':
-        return wizard_class(player_level, player_name)
-    elif player_input == 'k':
-        return knight_class(player_level, player_name)
+    while True:
+        player_name = input('What should we call you \n').title()
+        player_level = 1
+        player_input = input('What class would you like to play? (W)izard, (H)unter, or (K)night: \n').lower()
+        if player_input == 'h' or player_input == 'hunter':
+            return hunter_class(player_level, player_name)
+        elif player_input == 'w' or player_input == 'wizard':
+            return wizard_class(player_level, player_name)
+        elif player_input == 'k' or player_input == 'knight':
+            return knight_class(player_level, player_name)
+        else:
+            print('Please enter a valid class')
     
 player = starter_class()
-
-print(f'Welcome {player.name}')
-print('In these dungeons lies death and terror at every turn.')
-print('It is your job to make it across the other side while obtaining any loot that might be valuable for yourself.')
-print('Once entered the only options you have is going straight, left, or right unless other wise stated. You will not be allowed to exit the dungeon once entered so make sure you have the proper gear.')
-

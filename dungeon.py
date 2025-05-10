@@ -1,8 +1,12 @@
 import random
-from enemies import Enemies, head_armour_reduction, leg_armour_recution, chest_armour_reduciton, STAGE
+from enemies import Enemies, STAGE
 from knight import LONG_SWORD, long_sword_dmg
 from weapons import Swords
 from starter import player
+
+def entering_dungeon():
+    print('Entering dungeon... good luck brave one')
+    print('\n')
 
 def player_direction_choice():
     while True:
@@ -13,28 +17,35 @@ def player_direction_choice():
             print('Please enter a valid option')
     return user_input_direction
 
-def random_chance_armour(armour):
-    random_num = (0, 9 + STAGE)
-    if random_num >= 8:
-        return armour
-    else:
-        return None
+# def random_chance_armour(armour):
+#     random_num = (0, 9 + STAGE)
+#     if random_num >= 8:
+#         return armour
+#     else:
+#         return None
 
 def make_enemies():
     random_num_enemies = random.randint(1, 1 + STAGE)
     weapon = Swords(LONG_SWORD, long_sword_dmg)
+    print(f'You ran into {random_num_enemies} enemies')
+    count = 1
     for _ in range(random_num_enemies):
-        Enemies(10, weapon, random_chance_armour(head_armour_reduction), random_chance_armour(chest_armour_reduciton), random_chance_armour(leg_armour_recution))
+        enemy = Enemies(10, weapon)
+        print(f'Enemy {count} stats: {enemy}')
+        count += 1
 
 def spawn_chest():
     print('You got a chest')
+    print('10 gold added')
 
 def spawn_chest_or_enemies():
     random_num = random.randint(0,10)
     if random_num >= 9:
         spawn_chest()
+        return False
     else:
         make_enemies()
+        return True
 
 def random_loot_drop():
     random_num = random.randint(0, 10)
@@ -43,4 +54,3 @@ def random_loot_drop():
     else:
         player.gold += 1
         player.xp_bar += 2
-
