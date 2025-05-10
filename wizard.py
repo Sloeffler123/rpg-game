@@ -80,7 +80,7 @@ class Wizard:
         user_input = input('(D)elete item/(C)hange gear/(E)xit').lower()
         if user_input == 'd' or 'delete':
             while True:
-                delete_item = input('What item would you like to delete from your inventory? ').lower()
+                delete_item = input('What item would you like to delete from your inventory? (E)xit').lower()
                 if delete_item in self.inventory:
                     print(f'Deleting {delete_item}')
                     self.delete_item_inventory(delete_item)   
@@ -91,10 +91,12 @@ class Wizard:
             change_item = input('What item slot would you like to change? (W)eapon, (H)ead gear, (C)hest plate, (L)eg plate, (E)xit').lower()
             if change_item == 'w' or change_item == 'weapon':
                 while True:
-                    weapon_change = input('What weapon in your inventory would you like to swap with? ')
+                    weapon_change = input('What weapon in your inventory would you like to swap with? (E)xit').lower()
                     print(f'Inventory: {self.inventory}')
                     if weapon_change in self.inventory:
                         self.change_weapon(weapon_change)
+                        break
+                    elif weapon_change == 'e' or weapon_change == 'exit':
                         break
                     else:
                         print('Please enter a valid option')    
@@ -126,7 +128,7 @@ class Wizard:
                     else:
                         print('Please enter a valid option')    
             elif change_item == 'e' or change_item == 'exit':
-                pass                                
+                pass                        
         elif user_input == 'e' or user_input == 'exit':
             pass
     def swap_enemies(self, target, enemies_lst):
