@@ -4,51 +4,9 @@ from wizard import Wizard, WIZARD_HAT, WIZARD_BOOTS, WIZARD_ROBE, MAGIC_STAFF, W
 
 from knight import Knight, KNIGHT_HELMET, KNIGHT_CHESTPLATE, KNIGHT_LEGPLATES, KATANA, LONG_SWORD, RAPIER, knight_legplates_dmg_reduction, knight_chestplate_dmg_reduction, knight_helmet_armour_dmg_reduction, long_sword_dmg, rapier_dmg, katana_dmg
 
+from armour import HeadArmour, ChestArmour, PantsArmour
+
 from weapons import Bows, Swords, Staffs
-#todo
-#make the classes with there health and starting loadouts
-#make a level increase method that increases there hp attack  and defense
-#make a weapons class
-
-
-# Weapons
-
-# TODO
-# make a change weapon method that switched the players current weapon
-# figure out how to determine the damage output based off of type of weapon and level of player
-# add a stats method that shows the stats of the weapon such as damage and special abilites
-#
-
-def delete_weapon(weapon_class_object):
-    del weapon_class_object
-
-# Armour
-
-# TODO
-# make a method that allows for the user to change gear
-# make a del function that allows the user to delete any current gear they have
-
-
-class HeadArmour:
-    def __init__(self, type, defence):
-        self.defence = defence
-        self.type = type
-
-class ChestArmour(HeadArmour):
-    def __init__(self, type, defence):
-        super().__init__(type, defence)
-
-class PantsArmour(HeadArmour):
-    def __init__(self, type, defence):
-        super().__init__(type, defence)
-
-# Classes
-
-# TODO
-# This is where the player can change there gear
-# make a method that allows the player to view their inventory and del stuff out of their inventory
-# make a mehtod that allows the user to switch the char that is attacking
-# make a method that allows the user to switch the enemy that is targeted
 
 def hunter_class(player_level, player_name):
     health = 150
@@ -87,4 +45,8 @@ def starter_class():
     
 player = starter_class()
 
-print(player)
+print(f'Welcome {player.name}')
+print('In these dungeons lies death and terror at every turn.')
+print('It is your job to make it across the other side while obtaining any loot that might be valuable for yourself.')
+print('Once entered the only options you have is going straight, left, or right unless other wise stated. You will not be allowed to exit the dungeon once entered so make sure you have the proper gear.')
+

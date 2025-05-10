@@ -40,9 +40,11 @@ class Wizard:
         self.head_armour = head_armour
         self.middle_armour = middle_armour
         self.lower_armour = lower_armour
-        self.inventory = []
         self.name = name
+        self.inventory = []
         self.level = 1
+        self.gold = 0
+        self.xp_bar = 0
     def check_inventory_space(self):
         if self.inventory == 15:
             print('To many items in your inventory')
