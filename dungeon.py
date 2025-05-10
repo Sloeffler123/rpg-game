@@ -26,9 +26,9 @@ def player_direction_choice():
 
 def make_enemies():
     random_num_enemies = random.randint(1, 1 + STAGE)
-    weapon = Swords(LONG_SWORD, long_sword_dmg)
-    print(f'You ran into {random_num_enemies} enemies')
+    weapon = Swords(LONG_SWORD, long_sword_dmg(STAGE))
     count = 1
+    print(f'You ran into {random_num_enemies} enemies')
     for _ in range(random_num_enemies):
         enemy = Enemies(10, weapon)
         print(f'Enemy {count} stats: {enemy}')
@@ -41,6 +41,7 @@ def spawn_chest():
 def spawn_chest_or_enemies():
     random_num = random.randint(0,10)
     if random_num >= 9:
+        print()
         spawn_chest()
         return False
     else:

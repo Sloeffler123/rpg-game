@@ -31,8 +31,8 @@ def wizard_robe_dmg_reduction(player_level):
     return 4 + player_level
 
 def wizard_boots_dmg_reduction(player_level):
-    return 2 + player_level
-
+    return 2 + player_level        
+    
 class Wizard:
     def __init__(self, health, weapon, head_armour, middle_armour, lower_armour, name):
         self.health = health
@@ -89,7 +89,7 @@ class Wizard:
         user_input = input('(D)elete item/(C)hange gear/(E)xit').lower()
         if user_input == 'd' or user_input == 'delete':
             while True:
-                delete_item = input('What item would you like to delete from your inventory? (E)xit').lower()
+                delete_item = input('What item would you like to delete from your inventory? (E)xit ').lower()
                 if delete_item in self.inventory:
                     print(f'Deleting {delete_item}')
                     self.delete_item_inventory(delete_item)   
@@ -97,10 +97,10 @@ class Wizard:
                 else:
                     print('Please enter a valid item') 
         elif user_input == 'c' or user_input == 'change':
-            change_item = input('What item slot would you like to change? (W)eapon, (H)ead gear, (C)hest plate, (L)eg plate, (E)xit').lower()
+            change_item = input('What item slot would you like to change? (W)eapon, (H)ead gear, (C)hest plate, (L)eg plate, (E)xit ').lower()
             if change_item == 'w' or change_item == 'weapon':
                 while True:
-                    weapon_change = input('What weapon in your inventory would you like to swap with? (E)xit').lower()
+                    weapon_change = input('What weapon in your inventory would you like to swap with? (E)xit ').lower()
                     print(f'Inventory: {self.inventory}')
                     if weapon_change in self.inventory:
                         self.change_weapon(weapon_change)
@@ -143,6 +143,8 @@ class Wizard:
 
     def swap_enemies(self, target, enemies_lst):
         enemy = enemies_lst[target]
+        if enemy == enemies_lst[0]:
+            return
         enemy_index = enemies_lst.index(enemy)
         enemies_lst.pop(enemy_index)
         enemies_lst.insert(0, enemy)
@@ -155,6 +157,14 @@ class Wizard:
                 print(f'Attacking enemy {player_attack + 1}')
                 self.swap_enemies(player_attack, enemies_lst)
                 self.attack(self.weapon, enemies_lst[0])
+                print(f'{enemies_lst[0]} took {self.weapon} damage')
                 break
             else:
                 print('Please enter the number of the positon of the enemy you would like to attack')    
+    def player_attack_inventory(self):
+        while True:
+            player_input = input('What would you like to do? (I)nventory, (A)ttack').lower()
+            if player_input in ('i', 'inventory'):
+                self.look_inventory()
+            elif player_input in ('a', 'attack'):
+                break

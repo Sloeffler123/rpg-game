@@ -17,6 +17,4 @@ class Enemies:
         Enemies.total_enemeies.append(self)
     
     def attack(self, target):
-        target.health -= self.weapon
-
-
+        target.health -= self.weapon.damage
