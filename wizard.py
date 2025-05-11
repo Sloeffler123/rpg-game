@@ -45,6 +45,7 @@ class Wizard:
         self.level = 1
         self.gold = 0
         self.xp_bar = 0
+        self.stats = [self.health, self.weapon, self.head_armour, self.middle_armour, self.lower_armour, self.level, self.gold, self.xp_bar]
 
     def check_inventory_space(self):
         if self.inventory == 15:
@@ -151,20 +152,25 @@ class Wizard:
 
     def attack_enemy(self, enemies_lst):
         while True:
-            print(enemies_lst)
-            player_attack = int(input('Which enemy would you like to attack? ')) - 1
-            if type(player_attack) == int:
-                print(f'Attacking enemy {player_attack + 1}')
-                self.swap_enemies(player_attack, enemies_lst)
-                self.attack(self.weapon, enemies_lst[0])
-                print(f'{enemies_lst[0]} took {self.weapon} damage')
-                break
-            else:
-                print('Please enter the number of the positon of the enemy you would like to attack')    
+            try:
+                player_attack = int(input('Which enemy would you like to attack? ')) - 1
+                if type(player_attack) == int:
+                    print(f'Attacking enemy {player_attack + 1}')
+                    self.swap_enemies(player_attack, enemies_lst)
+                    self.attack(self.weapon, enemies_lst[0])
+                    print(f'{enemies_lst[0]} took {self.weapon.damage} damage')
+                    break
+                else:
+                    print('Please enter the number of the positon of the enemy you would like to attack')    
+            except ValueError:
+                print('Please enter a number')        
     def player_attack_inventory(self):
         while True:
-            player_input = input('What would you like to do? (I)nventory, (A)ttack').lower()
+            player_input = input('What would you like to do? (I)nventory, (A)ttack ').lower()
             if player_input in ('i', 'inventory'):
                 self.look_inventory()
             elif player_input in ('a', 'attack'):
                 break
+    def __str__(self):
+        return self.name
+        

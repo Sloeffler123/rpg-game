@@ -1,7 +1,9 @@
 import random
 from enemies import Enemies, STAGE
 from knight import LONG_SWORD, long_sword_dmg
-from weapons import Swords
+from hunter import LONG_BOW, long_bow_dmg
+from wizard import MAGIC_STAFF, magic_staff_dmg
+from weapons import Swords, Bows, Staffs
 from starter import player
 
 def entering_dungeon():
@@ -24,15 +26,21 @@ def player_direction_choice():
 #     else:
 #         return None
 
+def random_weapon():
+    sword = Swords(LONG_SWORD, long_sword_dmg(STAGE))
+    bow = Bows(LONG_BOW, long_bow_dmg(STAGE))
+    staff = Staffs(MAGIC_STAFF, magic_staff_dmg(STAGE))
+    weapons = [sword, bow, staff]
+    weapon = random.choice(weapons)
+    return weapon
+
 def make_enemies():
     random_num_enemies = random.randint(1, 1 + STAGE)
-    weapon = Swords(LONG_SWORD, long_sword_dmg(STAGE))
-    count = 1
+    weapon = random_weapon()
     print(f'You ran into {random_num_enemies} enemies')
-    for _ in range(random_num_enemies):
-        enemy = Enemies(10, weapon)
-        print(f'Enemy {count} stats: {enemy}')
-        count += 1
+    for i in range(random_num_enemies):
+        enemy = Enemies(10, weapon, f'Enemy {i + 1}')
+        enemy.get_stats()
 
 def spawn_chest():
     print('You got a chest')

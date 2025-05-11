@@ -20,6 +20,5 @@ def main():
         # asks the user what direction they want to go
         player_direction_choice()
         # player attacks
-        attack_loop()
-        
+        attack_loop()   
 main()
