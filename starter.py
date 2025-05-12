@@ -1,13 +1,15 @@
 from hunter import Hunter, HUNTER_BOOTS,HUNTER_CLOAK, HUNTER_HOOD, LONG_BOW, CROSS_BOW, RECURIVED_BOW, hunter_hood_dmg_reduction, hunter_boots_dmg_reduction, hunter_cloak_dmg_reduction, long_bow_dmg, cross_bow, recurived_bow_dmg
-
 from wizard import Wizard, WIZARD_HAT, WIZARD_BOOTS, WIZARD_ROBE, MAGIC_STAFF, WATER_STAFF, LIGHTING_STAFF, FIRE_STAFF, wizard_boots_dmg_reduction, wizard_hat_dmg_reduction, wizard_robe_dmg_reduction, magic_staff_dmg, lighting_staff_dmg, water_staff_dmg, fire_staff_dmg
-
 from knight import Knight, KNIGHT_HELMET, KNIGHT_CHESTPLATE, KNIGHT_LEGPLATES, KATANA, LONG_SWORD, RAPIER, knight_legplates_dmg_reduction, knight_chestplate_dmg_reduction, knight_helmet_armour_dmg_reduction, long_sword_dmg, rapier_dmg, katana_dmg
-
 from armour import HeadArmour, ChestArmour, PantsArmour
+from dungeon import entering_dungeon, player_direction_choice, spawn_chest_or_enemies, random_loot_drop
+from attack_loop import attack_loop
+from boss import make_boss, boss_fight_loop
+from weapons import Bows, Swords, Staffs, random_weapon
+from intro import story
+from enemies import Enemies
 
-from weapons import Bows, Swords, Staffs
-
+STAGE = 1
 def hunter_class(player_level, player_name):
     health = 150
     weapon = Bows(LONG_BOW, long_bow_dmg(player_level))
@@ -47,3 +49,30 @@ def starter_class():
             print('Please enter a valid class')
     
 player = starter_class()
+
+story()
+print('\n')
+input(f'Welcome {player.name} (esc) \n')
+input('In these dungeons lies death and terror at every turn. (esc) \n')
+input('It is your job to make it across the other side while obtaining any loot that might be valuable for yourself. (esc) \n')
+input('Once entered the only options you have is going straight, left, or right unless other wise stated. You will not be allowed to exit the dungeon once entered so make sure you have the proper gear. (esc) \n')
+
+# main game loop
+def main():
+    combats = 0
+    # entering the dungeon print statement
+    entering_dungeon()
+    on = True
+    while on:
+        # asks the user what direction they want to go
+        player_direction_choice()
+        if combats == 1:
+            boss_fight_loop(player, knight_helmet_armour_dmg_reduction(STAGE), knight_chestplate_dmg_reduction(STAGE), knight_legplates_dmg_reduction(STAGE), random_weapon(STAGE))
+            break
+            combats = -1
+        combats += 1
+        # player attacks
+        enemies = Enemies
+        attack_loop(player, spawn_chest_or_enemies(player, STAGE, random_weapon(STAGE), enemies), enemies, random_weapon(STAGE), STAGE, random_loot_drop)   
+main()
+print('Game over for now')

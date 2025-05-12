@@ -143,12 +143,15 @@ class Wizard:
             pass
 
     def swap_enemies(self, target, enemies_lst):
-        enemy = enemies_lst[target]
-        if enemy == enemies_lst[0]:
-            return
-        enemy_index = enemies_lst.index(enemy)
-        enemies_lst.pop(enemy_index)
-        enemies_lst.insert(0, enemy)
+        try:
+            enemy = enemies_lst[target]
+            if enemy == enemies_lst[0]:
+                return
+            enemy_index = enemies_lst.index(enemy)
+            enemies_lst.pop(enemy_index)
+            enemies_lst.insert(0, enemy)
+        except IndexError:
+            target -= 1    
 
     def attack_enemy(self, enemies_lst):
         while True:
@@ -163,7 +166,7 @@ class Wizard:
                 else:
                     print('Please enter the number of the positon of the enemy you would like to attack')    
             except ValueError:
-                print('Please enter a number')        
+                print('Please enter a number')            
     def player_attack_inventory(self):
         while True:
             player_input = input('What would you like to do? (I)nventory, (A)ttack ').lower()
@@ -171,6 +174,10 @@ class Wizard:
                 self.look_inventory()
             elif player_input in ('a', 'attack'):
                 break
+    def attack_boss(self, target):
+        print('Attacking boss...')
+        self.attack(self.weapon, target)
+        print(f'Boss took {self.weapon.damage} damage')   
     def __str__(self):
         return self.name
         

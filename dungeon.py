@@ -32,14 +32,14 @@ def spawn_chest(player):
     player.gold += 10
     input('10 gold added (esc)')
 
-def spawn_chest_or_enemies(player):
+def spawn_chest_or_enemies(player, stage, weapon_func, enemies_obj):
     random_num = random.randint(0,10)
     if random_num >= 9:
         print()
         spawn_chest(player)
         return False
     else:
-        make_enemies()
+        make_enemies(enemies_obj, weapon_func, stage)
         return True
 
 def random_loot_drop(player):

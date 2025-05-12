@@ -16,16 +16,16 @@ class Boss(Enemies):
     def __str__(self):
         return f'{self.name}'
 # boss fight loop
-def make_boss(stage, knight_helm, knight_chest, knight_leg, weapon_func):
+def make_boss(knight_helm, knight_chest, knight_leg, weapon_func):
     input('The boss that protects this dungeon is up ahead... good luck brave one (esc)')
-    boss = Boss(300, knight_helm(stage), knight_chest(stage, knight_leg(stage)), weapon_func, 'Big Boss')
+    boss = Boss(300, knight_helm, knight_chest, knight_leg, weapon_func, 'Big Boss')
     return boss
 
-def boss_fight_loop(player):
-    boss = make_boss()
+def boss_fight_loop(player, knight_helm, knight_chest, knight_leg, weapon_func):
+    boss = make_boss(knight_helm, knight_chest, knight_leg, weapon_func)
     boss.dialogue()
-    while Boss.total_enemeies:
+    while boss.health > 0:
             player.player_attack_inventory()
-            player.attack_enemy(Boss.total_enemeies)
+            player.attack_boss(boss)
             boss.attack(player)
     print('You did it brave one. That evil monster has been terrorizing this dungeon for centuries.')        
