@@ -23,8 +23,6 @@ class Enemies:
                 print('You died')
                 sys.exit(0)
         print(f'{target} took {self.weapon.damage} damage')
-    def check_health(self):
-        return self.health 
     def get_stats(self):
         print(f'{self.name}s stats: health: {self.health}, weapon: {self.weapon}')
     def __str__(self):

@@ -1,21 +1,18 @@
-from starter import player
-from dungeon import spawn_chest_or_enemies
-from enemies import Enemies
-from dungeon import random_loot_drop
-def enemy_attack():
-    enemies = Enemies.total_enemeies
+
+def enemy_attack(player, random_loot_func, enemies_obj):
+    enemies = enemies_obj.total_enemeies
     for enemy in enemies[:]:
         if enemy.health <= 0:
-            print(f'You killed {enemy}')
+            input(f'You killed {enemy} (esc)')
             enemies.remove(enemy)
-            random_loot_drop()
+            random_loot_func(player)
         else:
             enemy.attack(player)
 
-def attack_loop():
-    check = spawn_chest_or_enemies()
+def attack_loop(player, chest_or_enemies, enemies_obj):
+    check = chest_or_enemies(player)
     if check:
-        while Enemies.total_enemeies:
+        while enemies_obj.total_enemeies:
             player.player_attack_inventory()
-            player.attack_enemy(Enemies.total_enemeies)
-            enemy_attack()
+            player.attack_enemy(enemies_obj.total_enemeies)
+            enemy_attack(player, )

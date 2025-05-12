@@ -49,7 +49,7 @@ class Wizard:
 
     def check_inventory_space(self):
         if self.inventory == 15:
-            print('To many items in your inventory')
+            input('To many items in your inventory (esc)')
             return False
         else:
             return True    

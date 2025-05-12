@@ -1,13 +1,7 @@
 import random
-from enemies import Enemies, STAGE
-from knight import LONG_SWORD, long_sword_dmg
-from hunter import LONG_BOW, long_bow_dmg
-from wizard import MAGIC_STAFF, magic_staff_dmg
-from weapons import Swords, Bows, Staffs
-from starter import player
 
 def entering_dungeon():
-    print('Entering dungeon... good luck brave one')
+    input('Entering dungeon... good luck brave one (esc)')
     print('\n')
 
 def player_direction_choice():
@@ -26,40 +20,33 @@ def player_direction_choice():
 #     else:
 #         return None
 
-def random_weapon():
-    sword = Swords(LONG_SWORD, long_sword_dmg(STAGE))
-    bow = Bows(LONG_BOW, long_bow_dmg(STAGE))
-    staff = Staffs(MAGIC_STAFF, magic_staff_dmg(STAGE))
-    weapons = [sword, bow, staff]
-    weapon = random.choice(weapons)
-    return weapon
-
-def make_enemies():
-    random_num_enemies = random.randint(1, 1 + STAGE)
-    weapon = random_weapon()
+def make_enemies(enemies_obj, weapon_func, stage):
+    random_num_enemies = random.randint(1, 1 + stage)
     print(f'You ran into {random_num_enemies} enemies')
     for i in range(random_num_enemies):
-        enemy = Enemies(10, weapon, f'Enemy {i + 1}')
+        enemy = enemies_obj(20, weapon_func, f'Enemy {i + 1}')
         enemy.get_stats()
 
-def spawn_chest():
+def spawn_chest(player):
     print('You got a chest')
-    print('10 gold added')
+    player.gold += 10
+    input('10 gold added (esc)')
 
-def spawn_chest_or_enemies():
+def spawn_chest_or_enemies(player):
     random_num = random.randint(0,10)
     if random_num >= 9:
         print()
-        spawn_chest()
+        spawn_chest(player)
         return False
     else:
         make_enemies()
         return True
 
-def random_loot_drop():
+def random_loot_drop(player):
     random_num = random.randint(0, 10)
     if random_num >= 8:
         print('dropped loot')
     else:
         player.gold += 1
         player.xp_bar += 2
+   
